@@ -1,3 +1,5 @@
+package comparable;
+
 import api.FilterableApi;
 import api.queries.utils.FilterSpecification;
 import filters.operations.ComparableOperation;
@@ -23,7 +25,6 @@ public class ComparableTest {
     private final CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
     private final CriteriaQuery<?> query = mock(CriteriaQuery.class);
     private final Predicate expectedPredicate = mock(Predicate.class);
-    private final Predicate otherPredicate = mock(Predicate.class); // Mock for the other predicate
 
     @Test
     @DisplayName("ComparableOperations")

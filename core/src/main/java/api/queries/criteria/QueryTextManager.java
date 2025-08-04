@@ -24,7 +24,7 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
     }
 
     @Override
-    public QueryTextManager<T> where(FilterSpecification<T> specification) {
+    public QueryTextManager<T> custom(FilterSpecification<T> specification) {
         if (specification == null) {
             return this;
         }
@@ -49,13 +49,13 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         checkAvailability(operation);
         CriteriaSingularBuilder<T, String> builder = CriteriaSingularBuilder.builder();
         CriteriaSingularStringBuilder<T> stringBuilder = CriteriaSingularStringBuilder.create();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case EQ -> builder.equalsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case NEQ -> builder.notEqualsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS -> stringBuilder.containsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case NOT_CONTAINS -> stringBuilder.notContainsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case STARTS_WITH -> stringBuilder.startsWithOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case ENDS_WITH -> stringBuilder.endsWithOp(attribute, value).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case EQ -> builder.equalsOp(attribute, value);
+            case NEQ -> builder.notEqualsOp(attribute, value);
+            case CONTAINS -> stringBuilder.containsOp(attribute, value);
+            case NOT_CONTAINS -> stringBuilder.notContainsOp(attribute, value);
+            case STARTS_WITH -> stringBuilder.startsWithOp(attribute, value);
+            case ENDS_WITH -> stringBuilder.endsWithOp(attribute, value);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -78,14 +78,14 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         checkAvailability(operation);
         CriteriaSingularStringBuilder<T> builder = CriteriaSingularStringBuilder.create();
         CriteriaSingularBuilder<T, String> singular = CriteriaSingularBuilder.builder();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case IN -> singular.inOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case NOT_IN -> singular.notInOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS -> builder.containsOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case NOT_CONTAINS -> builder.notContainsOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS_ALL -> builder.containsAllOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case STARTS_WITH -> builder.startsWithOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case ENDS_WITH -> builder.endsWithOp(attribute, values).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case IN -> singular.inOp(attribute, values);
+            case NOT_IN -> singular.notInOp(attribute, values);
+            case CONTAINS -> builder.containsOp(attribute, values);
+            case NOT_CONTAINS -> builder.notContainsOp(attribute, values);
+            case CONTAINS_ALL -> builder.containsAllOp(attribute, values);
+            case STARTS_WITH -> builder.startsWithOp(attribute, values);
+            case ENDS_WITH -> builder.endsWithOp(attribute, values);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -116,14 +116,14 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
 
     @Override
     protected void setRegistry(OperationRegistry registry) {
-        if (this.operationRegistry == null && registry != null) {
+        if (registry != null) {
             this.operationRegistry = registry;
         }
     }
 
     @Override
     protected void setSpecification(FilterSpecification<T> specification) {
-        if (this.specification == null && specification != null) {
+        if (specification != null) {
             this.specification = specification;
         }
     }

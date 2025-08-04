@@ -54,4 +54,16 @@ public class TextConfig<T> extends FilterConfiguration<T, String> {
         super.interDisableNotEquals();
         return this;
     }
+
+    @Override
+    public FilterConfiguration<T, String> disableIn() {
+        super.interDisableIn();
+        return this;
+    }
+
+    @Override
+    public FilterConfiguration<T, String> disableNotIn() {
+        super.interDisableNotIn();
+        return this;
+    }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unchecked")
 @DisplayName("Query Comparable Manager Tests")
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class ComparableManagerTest {

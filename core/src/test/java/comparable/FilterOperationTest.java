@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 @DisplayName("Filter operations tests")
 public class FilterOperationTest {
 

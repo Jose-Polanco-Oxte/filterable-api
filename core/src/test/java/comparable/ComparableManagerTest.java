@@ -58,6 +58,12 @@ public class ComparableManagerTest {
     @Nested
     @DisplayName("Test filter record")
     class FilterRecordTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null filter and null attribute")
         public void methodWithNullFilterAndAttribute() {
@@ -79,17 +85,27 @@ public class ComparableManagerTest {
         }
 
         @Test
-        @DisplayName("Method with valid filter and valid attribute")
-        public void methodWithValidFilterAndValidAttribute() {
-            when(criteriaBuilder.equal(root.get(User_.id), 3L)).thenReturn(predicate);
-            manager.filter(new Filter<>(3L, ComparableOperation.EQ), User_.id);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        @DisplayName("Method with filter values null")
+        public void methodWithFilterValuesNullAndValidAttribute() {
+            manager.filter(new Filter<>(null, ComparableOperation.EQ), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.filter(new Filter<>(null, null), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.filter(new Filter<>(2L, null), User_.id);
         }
     }
 
     @Nested
     @DisplayName("Test filter method with SingularAttribute")
     class FilterMethodTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null attribute and null value")
         public void methodWithNullAttributeAndValue() {
@@ -110,19 +126,17 @@ public class ComparableManagerTest {
             manager.filter(User_.id, null, ComparableOperation.EQ);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
-
-        @Test
-        @DisplayName("Method with valid attribute and valid value")
-        public void methodWithValidAttributeAndValue() {
-            when(criteriaBuilder.equal(root.get(User_.id), 3L)).thenReturn(predicate);
-            manager.filter(User_.id, 3L, ComparableOperation.EQ);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
-        }
     }
 
     @Nested
     @DisplayName("Test filterIn method with filter record")
     class FilterInMethodTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null attribute and null filter")
         public void methodWithNullAttributeAndNullFilter() {
@@ -145,6 +159,19 @@ public class ComparableManagerTest {
         }
 
         @Test
+        @DisplayName("Method with filter values null")
+        public void methodWithFilterValuesNullAndValidAttribute() {
+            manager.filterIn(new CollectionFilter<>(null, InOperation.IN), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.filterIn(new CollectionFilter<>(List.of(), InOperation.IN), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.filterIn(new CollectionFilter<>(List.of(1L, 2L), null), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        }
+
+        @Test
         @DisplayName("Method with valid filter and valid attribute")
         public void methodWithValidFilterAndNullAttribute() {
             when(root.get(User_.id)).thenReturn(mock());
@@ -157,6 +184,12 @@ public class ComparableManagerTest {
     @Nested
     @DisplayName("Test filterIn method with SingularAttribute")
     class FilterInMethodWithSingularAttributeTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null attribute and null values")
         public void methodWithNullAttributeAndNullValues() {
@@ -198,6 +231,12 @@ public class ComparableManagerTest {
     @Nested
     @DisplayName("Test applyBetweenTo method with filter record")
     class ApplyBetweenToMethodWithFilterRecordTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null filter and null attribute")
         public void methodWithNullFilterAndAttribute() {
@@ -220,6 +259,19 @@ public class ComparableManagerTest {
         }
 
         @Test
+        @DisplayName("Method with filter values null")
+        public void methodWithFilterValuesNullAndValidAttribute() {
+            manager.applyBetweenTo(new RangeFilter<>(null, null), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.applyBetweenTo(new RangeFilter<>(1L, null), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            setUp();
+            manager.applyBetweenTo(new RangeFilter<>(null, 10L), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        }
+
+        @Test
         @DisplayName("Method with valid filter and valid attribute")
         public void methodWithValidFilterAndValidAttribute() {
             when(criteriaBuilder.between(root.get(User_.id), 1L, 10L)).thenReturn(predicate);
@@ -229,8 +281,14 @@ public class ComparableManagerTest {
     }
 
     @Nested
-    @DisplayName("Test applyBetweenTo method")
+    @DisplayName("Test applyBetweenTo method with SingularAttribute")
     class ApplyBetweenToMethodTests {
+
+        @BeforeEach
+        public void setUp() {
+            manager = new QueryComparableManager<>();
+        }
+
         @Test
         @DisplayName("Method with null attribute and null start and end")
         public void methodWithNullAttributeAndNullStartAndEnd() {

@@ -63,7 +63,6 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null || filter.value().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -98,7 +97,7 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         FilterSpecification<T> spec = switch (operation) {
             case IN -> builder.inOp(attribute, values, joinPath);
             case NOT_IN -> builder.notInOp(attribute, values, joinPath);
-            case CONTAINS -> textBuilder.containsOp(attribute, values, joinPath);
+            case CONTAINS_ANY -> textBuilder.containsOp(attribute, values, joinPath);
             case NOT_CONTAINS -> textBuilder.notContainsOp(attribute, values, joinPath);
             case CONTAINS_ALL -> textBuilder.containsAllOp(attribute, values, joinPath);
             case STARTS_WITH -> textBuilder.startsWithOp(attribute, values, joinPath);
@@ -113,7 +112,6 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 

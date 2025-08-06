@@ -60,7 +60,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -103,7 +102,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 
@@ -115,7 +113,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (attribute == null || lowerBound == null || upperBound == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
         FilterSpecification<T> spec = comparableBuilder.betweenOp(attribute, lowerBound, upperBound, joinPath);
         this.specification = this.specification.and(spec);
@@ -126,7 +123,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.start() == null || filter.end() == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         return applyBetweenTo(attribute, filter.start(), filter.end());
     }
 

@@ -3,7 +3,7 @@ package api.configurations;
 import filters.operations.FilterOperation;
 
 public class TextConfig<T> extends FilterConfiguration<T, String> {
-    public TextConfig<T> disableContains() {
+    public TextConfig<T> disableContainsAny() {
         if (this.operationRegistry.isOperationDisabled(FilterOperation.CONTAINS)) {
             return this;
         }
@@ -66,4 +66,6 @@ public class TextConfig<T> extends FilterConfiguration<T, String> {
         super.interDisableNotIn();
         return this;
     }
+
+
 }

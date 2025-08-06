@@ -7,7 +7,6 @@ import api.queries.utils.FilterSpecification;
 import filters.CollectionFilter;
 import filters.Filter;
 import filters.operations.FilterOperation;
-import filters.operations.InOperation;
 import filters.operations.TextCollectionOperation;
 import filters.operations.TextOperation;
 import jakarta.persistence.metamodel.SingularAttribute;
@@ -25,9 +24,7 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
 
     @Override
     public QueryTextManager<T> custom(FilterSpecification<T> specification) {
-        if (specification == null) {
-            return this;
-        }
+        if (specification == null) return this;
         this.specification = this.specification.and(specification);
         return this;
     }
@@ -37,7 +34,6 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         if (filter == null || attribute == null || filter.value() == null || filter.operation() == null) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -66,7 +62,6 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         if (filter == null || attribute == null || filter.values() == null || filter.operation() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 
@@ -81,7 +76,7 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         FilterSpecification<T> spec = switch (operation) {
             case IN -> singular.inOp(attribute, values);
             case NOT_IN -> singular.notInOp(attribute, values);
-            case CONTAINS -> builder.containsOp(attribute, values);
+            case CONTAINS_ANY -> builder.containsOp(attribute, values);
             case NOT_CONTAINS -> builder.notContainsOp(attribute, values);
             case CONTAINS_ALL -> builder.containsAllOp(attribute, values);
             case STARTS_WITH -> builder.startsWithOp(attribute, values);
@@ -100,10 +95,6 @@ public class QueryTextManager<T> extends SpecQuery<T, String, TextOperation, Tex
         if (operationRegistry.isOperationDisabled(operation)) {
             throw new FilterDisabledException(operation);
         }
-    }
-
-    public void checkAvailability(InOperation operation) {
-        checkAvailability(FilterOperation.fromInOperation(operation));
     }
 
     private void checkAvailability(TextOperation operation) {

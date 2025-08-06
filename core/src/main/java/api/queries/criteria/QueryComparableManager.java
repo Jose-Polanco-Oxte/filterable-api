@@ -35,7 +35,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -79,7 +78,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 
@@ -87,7 +85,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (attribute == null || start == null || end == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
         FilterSpecification<T> spec = comparableBuilder.betweenOp(attribute, start, end);
         this.specification = this.specification.and(spec);
@@ -98,7 +95,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.start() == null || filter.end() == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         return applyBetweenTo(attribute, filter.start(), filter.end());
     }
 

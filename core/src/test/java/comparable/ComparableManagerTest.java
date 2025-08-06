@@ -39,6 +39,7 @@ public class ComparableManagerTest {
     @BeforeEach
     public void setUp() {
         manager = new QueryComparableManager<>();
+        when(root.get(User_.id)).thenReturn(mock());
     }
 
     @Test
@@ -53,7 +54,9 @@ public class ComparableManagerTest {
     public void testCustomWithValidSpecification() {
         when(criteriaBuilder.isTrue(root.get("someField"))).thenReturn(predicate);
         manager.custom((root, query, cb) -> cb.isTrue(root.get("someField")));
-        assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+        assertNotNull(result);
+        assertEquals(predicate, result);
     }
 
     @Nested
@@ -95,6 +98,17 @@ public class ComparableManagerTest {
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
             setUp();
             manager.filter(new Filter<>(2L, null), User_.id);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        }
+
+        @Test
+        @DisplayName("Method with valid filter and valid attribute")
+        public void methodWithValidFilterAndValidAttribute() {
+            when(criteriaBuilder.equal(root.get(User_.id), 3L)).thenReturn(predicate);
+            manager.filter(new Filter<>(3L, ComparableOperation.EQ), User_.id);
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 
@@ -126,6 +140,23 @@ public class ComparableManagerTest {
         public void methodWithValidAttributeAndNullValue() {
             manager.filter(User_.id, null, ComparableOperation.EQ);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        }
+
+        @Test
+        @DisplayName("Method with valid attribute, valid value and null operation")
+        public void methodWithValidAttributeAndValidValueAndNullOperation() {
+            manager.filter(User_.id, 3L, null);
+            assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+        }
+
+        @Test
+        @DisplayName("Method with valid attribute, valid value and valid operation")
+        public void methodWithValidAttributeAndValidValueAndValidOperation() {
+            when(criteriaBuilder.equal(root.get(User_.id), 3L)).thenReturn(predicate);
+            manager.filter(User_.id, 3L, ComparableOperation.EQ);
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 
@@ -175,10 +206,11 @@ public class ComparableManagerTest {
         @Test
         @DisplayName("Method with valid filter and valid attribute")
         public void methodWithValidFilterAndNullAttribute() {
-            when(root.get(User_.id)).thenReturn(mock());
             when(root.get(User_.id).in(List.of(1L, 2L))).thenReturn(predicate);
             manager.filterIn(new CollectionFilter<>(List.of(1L, 2L), InOperation.IN), User_.id);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 
@@ -222,10 +254,11 @@ public class ComparableManagerTest {
         @Test
         @DisplayName("Method with valid attribute and valid values")
         public void methodWithValidAttributeAndValidValues() {
-            when(root.get(User_.id)).thenReturn(mock());
             when(root.get(User_.id).in(List.of(1L, 2L))).thenReturn(predicate);
             manager.filterIn(User_.id, List.of(1L, 2L), InOperation.IN);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 
@@ -277,7 +310,9 @@ public class ComparableManagerTest {
         public void methodWithValidFilterAndValidAttribute() {
             when(criteriaBuilder.between(root.get(User_.id), 1L, 10L)).thenReturn(predicate);
             manager.applyBetweenTo(new RangeFilter<>(1L, 10L), User_.id);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 
@@ -316,7 +351,9 @@ public class ComparableManagerTest {
         public void methodWithValidAttributeAndValidStartAndEnd() {
             when(criteriaBuilder.between(root.get(User_.id), 1L, 10L)).thenReturn(predicate);
             manager.applyBetweenTo(User_.id, 1L, 10L);
-            assertNotNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
+            Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
+            assertNotNull(result);
+            assertEquals(predicate, result);
         }
     }
 }

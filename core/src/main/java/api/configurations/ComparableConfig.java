@@ -35,14 +35,6 @@ public class ComparableConfig<T, Y extends Comparable<? super Y>> extends Filter
         return this;
     }
 
-    public ComparableConfig<T, Y> disableBetween() {
-        if (this.operationRegistry.isOperationDisabled(FilterOperation.BETWEEN)) {
-            return this;
-        }
-        this.operationRegistry.disableOperation(FilterOperation.BETWEEN);
-        return this;
-    }
-
     @Override
     public ComparableConfig<T, Y> disableEquals() {
         super.interDisableEquals();
@@ -52,6 +44,18 @@ public class ComparableConfig<T, Y extends Comparable<? super Y>> extends Filter
     @Override
     public ComparableConfig<T, Y> disableNotEquals() {
         super.interDisableNotEquals();
+        return this;
+    }
+
+    @Override
+    public FilterConfiguration<T, Y> disableIn() {
+        super.interDisableIn();
+        return this;
+    }
+
+    @Override
+    public FilterConfiguration<T, Y> disableNotIn() {
+        super.interDisableNotIn();
         return this;
     }
 }

@@ -19,8 +19,24 @@ public abstract class FilterConfiguration<T, Y> {
         operationRegistry.disableOperation(FilterOperation.NOT_EQUALS);
     }
 
+    protected void interDisableIn() {
+        if (operationRegistry.isOperationDisabled(FilterOperation.IN)) {
+            return;
+        }
+        operationRegistry.disableOperation(FilterOperation.IN);
+    }
+
+    protected void interDisableNotIn() {
+        if (operationRegistry.isOperationDisabled(FilterOperation.NOT_IN)) {
+            return;
+        }
+        operationRegistry.disableOperation(FilterOperation.NOT_IN);
+    }
+
     public abstract FilterConfiguration<T, Y> disableEquals();
     public abstract FilterConfiguration<T, Y> disableNotEquals();
+    public abstract FilterConfiguration<T, Y> disableIn();
+    public abstract FilterConfiguration<T, Y> disableNotIn();
 
     public OperationRegistry disableAll() {
         operationRegistry.disableAllOperations();

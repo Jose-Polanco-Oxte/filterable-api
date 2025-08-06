@@ -50,7 +50,7 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     @Override
-    public MetamodelQuery<R, String, TextOperation, TextCollectionOperation> where(FilterSpecification<T> specification) {
+    public MetamodelQuery<R, String, TextOperation, TextCollectionOperation> custom(FilterSpecification<T> specification) {
         if (specification == null) {
             return this;
         }
@@ -63,7 +63,6 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null || filter.value().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -75,13 +74,13 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         checkAvailability(operation);
         CriteriaSingularBuilder<T, String> builder = CriteriaSingularBuilder.builder();
         CriteriaSingularStringBuilder<T> textBuilder = new CriteriaSingularStringBuilder<>();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case EQ -> builder.equalsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NEQ -> builder.notEqualsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS -> textBuilder.containsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NOT_CONTAINS -> textBuilder.notContainsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case STARTS_WITH -> textBuilder.startsWithOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case ENDS_WITH -> textBuilder.endsWithOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case EQ -> builder.equalsOp(attribute, value, joinPath);
+            case NEQ -> builder.notEqualsOp(attribute, value, joinPath);
+            case CONTAINS -> textBuilder.containsOp(attribute, value, joinPath);
+            case NOT_CONTAINS -> textBuilder.notContainsOp(attribute, value, joinPath);
+            case STARTS_WITH -> textBuilder.startsWithOp(attribute, value, joinPath);
+            case ENDS_WITH -> textBuilder.endsWithOp(attribute, value, joinPath);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -95,14 +94,14 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         checkAvailability(operation);
         CriteriaSingularBuilder<T, String> builder = CriteriaSingularBuilder.builder();
         CriteriaSingularStringBuilder<T> textBuilder = new CriteriaSingularStringBuilder<>();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case IN -> builder.inOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NOT_IN -> builder.notInOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS -> textBuilder.containsOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NOT_CONTAINS -> textBuilder.notContainsOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case CONTAINS_ALL -> textBuilder.containsAllOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case STARTS_WITH -> textBuilder.startsWithOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case ENDS_WITH -> textBuilder.endsWithOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case IN -> builder.inOp(attribute, values, joinPath);
+            case NOT_IN -> builder.notInOp(attribute, values, joinPath);
+            case CONTAINS_ANY -> textBuilder.containsOp(attribute, values, joinPath);
+            case NOT_CONTAINS -> textBuilder.notContainsOp(attribute, values, joinPath);
+            case CONTAINS_ALL -> textBuilder.containsAllOp(attribute, values, joinPath);
+            case STARTS_WITH -> textBuilder.startsWithOp(attribute, values, joinPath);
+            case ENDS_WITH -> textBuilder.endsWithOp(attribute, values, joinPath);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -113,7 +112,6 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 

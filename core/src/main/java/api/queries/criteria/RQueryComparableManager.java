@@ -47,7 +47,7 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     @Override
-    public RQueryComparableManager<T, R, Y> where(FilterSpecification<T> specification) {
+    public RQueryComparableManager<T, R, Y> custom(FilterSpecification<T> specification) {
         if (specification == null) {
             return this;
         }
@@ -60,7 +60,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -71,13 +70,13 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         checkAvailability(operation);
         CriteriaSingularBuilder<T, Y> builder = CriteriaSingularBuilder.builder();
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case EQ -> builder.equalsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NEQ -> builder.notEqualsOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case GT -> comparableBuilder.greaterThanOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case GTE -> comparableBuilder.greaterThanOrEqualOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case LT -> comparableBuilder.lessThanOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
-            case LTE -> comparableBuilder.lessThanOrEqualOp(attribute, value, joinPath).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case EQ -> builder.equalsOp(attribute, value, joinPath);
+            case NEQ -> builder.notEqualsOp(attribute, value, joinPath);
+            case GT -> comparableBuilder.greaterThanOp(attribute, value, joinPath);
+            case GTE -> comparableBuilder.greaterThanOrEqualOp(attribute, value, joinPath);
+            case LT -> comparableBuilder.lessThanOp(attribute, value, joinPath);
+            case LTE -> comparableBuilder.lessThanOrEqualOp(attribute, value, joinPath);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -90,9 +89,9 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         }
         checkAvailability(operation);
         CriteriaSingularBuilder<T, Y> builder = CriteriaSingularBuilder.builder();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case IN -> builder.inOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
-            case NOT_IN -> builder.notInOp(attribute, values, joinPath).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case IN -> builder.inOp(attribute, values, joinPath);
+            case NOT_IN -> builder.notInOp(attribute, values, joinPath);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -103,7 +102,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 
@@ -115,10 +113,8 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (attribute == null || lowerBound == null || upperBound == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) ->
-                comparableBuilder.betweenOp(attribute, lowerBound, upperBound, joinPath).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = comparableBuilder.betweenOp(attribute, lowerBound, upperBound, joinPath);
         this.specification = this.specification.and(spec);
         return this;
     }
@@ -127,7 +123,6 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
         if (filter == null || attribute == null || filter.start() == null || filter.end() == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         return applyBetweenTo(attribute, filter.start(), filter.end());
     }
 

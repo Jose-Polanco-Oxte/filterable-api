@@ -5,9 +5,9 @@ import api.operations.CollectionOp;
 public enum TextCollectionOperation implements CollectionOp {
     IN,
     NOT_IN,
-    CONTAINS,
-    NOT_CONTAINS,
+    CONTAINS_ANY,
     CONTAINS_ALL,
+    NOT_CONTAINS,
     STARTS_WITH,
     ENDS_WITH,
 }

@@ -24,10 +24,8 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     @Override
-    public QueryComparableManager<T, Y> where(FilterSpecification<T> specification) {
-        if (specification == null) {
-            return this;
-        }
+    public QueryComparableManager<T, Y> custom(FilterSpecification<T> specification) {
+        if (specification == null) return this;
         this.specification = this.specification.and(specification);
         return this;
     }
@@ -37,7 +35,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.operation() == null || filter.value() == null) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filter(attribute, filter.value(), filter.operation());
     }
 
@@ -49,13 +46,13 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         checkAvailability(operation);
         CriteriaSingularBuilder<T, Y> builder = CriteriaSingularBuilder.builder();
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case EQ -> builder.equalsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case NEQ -> builder.notEqualsOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case GT -> comparableBuilder.greaterThanOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case GTE -> comparableBuilder.greaterThanOrEqualOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case LT -> comparableBuilder.lessThanOp(attribute, value).toPredicate(root, query, criteriaBuilder);
-            case LTE -> comparableBuilder.lessThanOrEqualOp(attribute, value).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case EQ -> builder.equalsOp(attribute, value);
+            case NEQ -> builder.notEqualsOp(attribute, value);
+            case GT -> comparableBuilder.greaterThanOp(attribute, value);
+            case GTE -> comparableBuilder.greaterThanOrEqualOp(attribute, value);
+            case LT -> comparableBuilder.lessThanOp(attribute, value);
+            case LTE -> comparableBuilder.lessThanOrEqualOp(attribute, value);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -68,9 +65,9 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         }
         checkAvailability(operation);
         CriteriaSingularBuilder<T, Y> builder = CriteriaSingularBuilder.builder();
-        FilterSpecification<T> spec = (root, query, criteriaBuilder) -> switch (operation) {
-            case IN -> builder.inOp(attribute, values).toPredicate(root, query, criteriaBuilder);
-            case NOT_IN -> builder.notInOp(attribute, values).toPredicate(root, query, criteriaBuilder);
+        FilterSpecification<T> spec = switch (operation) {
+            case IN -> builder.inOp(attribute, values);
+            case NOT_IN -> builder.notInOp(attribute, values);
         };
         this.specification = this.specification.and(spec);
         return this;
@@ -81,7 +78,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.operation() == null || filter.values() == null || filter.values().isEmpty()) {
             return this;
         }
-        checkAvailability(filter.operation());
         return filterIn(attribute, filter.values(), filter.operation());
     }
 
@@ -89,7 +85,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (attribute == null || start == null || end == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         CriteriaSingularComparableBuilder<T, Y> comparableBuilder = new CriteriaSingularComparableBuilder<>();
         FilterSpecification<T> spec = comparableBuilder.betweenOp(attribute, start, end);
         this.specification = this.specification.and(spec);
@@ -100,7 +95,6 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
         if (filter == null || attribute == null || filter.start() == null || filter.end() == null) {
             return this;
         }
-        checkAvailability(FilterOperation.BETWEEN);
         return applyBetweenTo(attribute, filter.start(), filter.end());
     }
 
@@ -125,14 +119,14 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
 
     @Override
     protected void setRegistry(OperationRegistry registry) {
-        if (this.operationRegistry == null && registry != null) {
+        if (registry != null) {
             this.operationRegistry = registry;
         }
     }
 
     @Override
     protected void setSpecification(FilterSpecification<T> specification) {
-        if (this.specification == null && specification != null) {
+        if (specification != null) {
             this.specification = specification;
         }
     }

@@ -9,9 +9,6 @@ public enum FilterOperation {
     LESS_THAN_OR_EQUAL("lessThanOrEqual"),
     IN("in"),
     NOT_IN("notIn"),
-    IS_NULL("isNull"),
-    IS_NOT_NULL("isNotNull"),
-    BETWEEN("between"),
 
     // Operation string representation
     CONTAINS("contains"),
@@ -37,7 +34,7 @@ public enum FilterOperation {
         return switch (op) {
             case IN -> IN;
             case NOT_IN -> NOT_IN;
-            case CONTAINS -> CONTAINS;
+            case CONTAINS_ANY -> CONTAINS;
             case NOT_CONTAINS -> NOT_CONTAINS;
             case CONTAINS_ALL -> CONTAINS_ALL;
             case STARTS_WITH -> STARTS_WITH;

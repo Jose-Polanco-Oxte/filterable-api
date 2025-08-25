@@ -1,6 +1,7 @@
 package comparable;
 
 import api.FilterableApi;
+import api.configurations.ComparableConfig;
 import api.queries.utils.FilterSpecification;
 import filters.operations.ComparableOperation;
 import filters.operations.InOperation;
@@ -16,7 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -41,7 +43,7 @@ public class FilterOperationTest {
     public void greaterThanOperation() {
         when(root.get(User_.id)).thenReturn(mock());
         when(criteriaBuilder.greaterThan(root.get(User_.id), 10L)).thenReturn(expectedPredicate);
-        FilterSpecification<User> spec = api.<Long>comparable().configure()
+        FilterSpecification<User> spec = api.<Long>comparable().configure(ComparableConfig::disableEquals)
                 .filter(User_.id, 10L, ComparableOperation.GT)
                 .let().build();
         assertNotNull(spec);

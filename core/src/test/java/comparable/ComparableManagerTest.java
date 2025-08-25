@@ -274,34 +274,34 @@ public class ComparableManagerTest {
         @Test
         @DisplayName("Method with null filter and null attribute")
         public void methodWithNullFilterAndAttribute() {
-            manager.applyBetweenTo(null, null);
+            manager.filterBetween(null, null);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
         @Test
         @DisplayName("Method with null filter and valid attribute")
         public void methodWithNullFilterAndValidAttribute() {
-            manager.applyBetweenTo(null, User_.id);
+            manager.filterBetween(null, User_.id);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
         @Test
         @DisplayName("Method with valid filter and null attribute")
         public void methodWithValidFilterAndNullAttribute() {
-            manager.applyBetweenTo(new RangeFilter<>(1L, 10L), null);
+            manager.filterBetween(new RangeFilter<>(1L, 10L), null);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
         @Test
         @DisplayName("Method with filter values null")
         public void methodWithFilterValuesNullAndValidAttribute() {
-            manager.applyBetweenTo(new RangeFilter<>(null, null), User_.id);
+            manager.filterBetween(new RangeFilter<>(null, null), User_.id);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
             setUp();
-            manager.applyBetweenTo(new RangeFilter<>(1L, null), User_.id);
+            manager.filterBetween(new RangeFilter<>(1L, null), User_.id);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
             setUp();
-            manager.applyBetweenTo(new RangeFilter<>(null, 10L), User_.id);
+            manager.filterBetween(new RangeFilter<>(null, 10L), User_.id);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
@@ -309,7 +309,7 @@ public class ComparableManagerTest {
         @DisplayName("Method with valid filter and valid attribute")
         public void methodWithValidFilterAndValidAttribute() {
             when(criteriaBuilder.between(root.get(User_.id), 1L, 10L)).thenReturn(predicate);
-            manager.applyBetweenTo(new RangeFilter<>(1L, 10L), User_.id);
+            manager.filterBetween(new RangeFilter<>(1L, 10L), User_.id);
             Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
             assertNotNull(result);
             assertEquals(predicate, result);
@@ -328,21 +328,21 @@ public class ComparableManagerTest {
         @Test
         @DisplayName("Method with null attribute and null start and end")
         public void methodWithNullAttributeAndNullStartAndEnd() {
-            manager.applyBetweenTo(null, null, null);
+            manager.filterBetween(null, null, null);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
         @Test
         @DisplayName("Method with null attribute and valid start and end")
         public void methodWithNullAttributeAndValidStartAndEnd() {
-            manager.applyBetweenTo(null, 1L, 10L);
+            manager.filterBetween(null, 1L, 10L);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
         @Test
         @DisplayName("Method with valid attribute and null start and end")
         public void methodWithValidAttributeAndNullStartAndEnd() {
-            manager.applyBetweenTo(User_.id, null, null);
+            manager.filterBetween(User_.id, null, null);
             assertNull(manager.let().build().toPredicate(root, query, criteriaBuilder));
         }
 
@@ -350,7 +350,7 @@ public class ComparableManagerTest {
         @DisplayName("Method with valid attribute and valid start and end")
         public void methodWithValidAttributeAndValidStartAndEnd() {
             when(criteriaBuilder.between(root.get(User_.id), 1L, 10L)).thenReturn(predicate);
-            manager.applyBetweenTo(User_.id, 1L, 10L);
+            manager.filterBetween(User_.id, 1L, 10L);
             Predicate result = manager.let().build().toPredicate(root, query, criteriaBuilder);
             assertNotNull(result);
             assertEquals(predicate, result);

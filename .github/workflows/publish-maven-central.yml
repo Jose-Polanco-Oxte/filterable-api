@@ -1,0 +1,56 @@
+name: Publish to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (optional, uses tag if not provided)'
+        required: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+    - name: Validate Gradle wrapper
+      uses: gradle/actions/wrapper-validation@af1da67850ed9a4cedd57bfd976089dd991e2582
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
+    - name: Run tests
+      run: ./gradlew test
+
+    - name: Publish to GitHub Packages
+      run: ./gradlew publishMavenPublicationToGitHubPackagesRepository
+      env:
+        USERNAME: ${{ github.actor }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to Maven Central
+      if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push'
+      run: ./gradlew publishMavenPublicationToOSSRHRepository
+      env:
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+        SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}

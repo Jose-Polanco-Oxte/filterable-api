@@ -24,12 +24,62 @@ Perfect for projects that require dynamic querying without sacrificing compile-t
 
 ### 🔧 Installation
 
-For a Gradle multi-module setup:
+#### Maven
+
+Add the following dependencies to your `pom.xml`:
+
+```xml
+<dependencies>
+    <!-- Core filtering library -->
+    <dependency>
+        <groupId>io.github.jose-polanco-oxte</groupId>
+        <artifactId>core</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    
+    <!-- Optional Spring Data JPA integration -->
+    <dependency>
+        <groupId>io.github.jose-polanco-oxte</groupId>
+        <artifactId>spring-extension</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+```
+
+#### Gradle
+
+Add the following dependencies to your `build.gradle` or `build.gradle.kts`:
+
+```groovy
+dependencies {
+    // Core filtering library
+    implementation 'io.github.jose-polanco-oxte:core:1.0.0'
+    
+    // Optional Spring Data JPA integration
+    implementation 'io.github.jose-polanco-oxte:spring-extension:1.0.0'
+}
+```
+
+For Kotlin DSL (`build.gradle.kts`):
+
+```kotlin
+dependencies {
+    // Core filtering library
+    implementation("io.github.jose-polanco-oxte:core:1.0.0")
+    
+    // Optional Spring Data JPA integration
+    implementation("io.github.jose-polanco-oxte:spring-extension:1.0.0")
+}
+```
+
+#### Development Setup (for contributors)
+
+For a local Gradle multi-module setup:
 
 ```groovy
 dependencies {
     implementation project(":filterable-api:core")
-    testImplementation project(":filterable-api:test-utils")
+    implementation project(":filterable-api:spring-extension")
 }
 ```
 
@@ -119,3 +169,56 @@ userRepository.findAll(specification);
 * [ ] Auto-generating filters from annotated DTOs
 * [ ] Exporting filters to JSON or query strings
 * [ ] Support for grouped OR logic
+
+---
+
+### 🚀 Publishing & Development
+
+#### Building the Project
+
+```bash
+./gradlew clean build
+```
+
+#### Publishing to Local Maven Repository
+
+```bash
+./gradlew publishToMavenLocal
+```
+
+#### Publishing to Maven Central
+
+The project is configured to publish to Maven Central. Set the following environment variables or add them to your `~/.gradle/gradle.properties`:
+
+```properties
+# Maven Central / OSSRH credentials
+ossrh.username=your-sonatype-username
+ossrh.password=your-sonatype-password
+
+# Signing configuration (required for Maven Central)
+signing.keyId=your-key-id
+signing.password=your-key-password
+signing.secretKeyRingFile=/path/to/your/secring.gpg
+```
+
+Then run:
+
+```bash
+./gradlew publish
+```
+
+#### Publishing to GitHub Packages
+
+Set the following environment variables or add them to your `~/.gradle/gradle.properties`:
+
+```properties
+# GitHub Packages credentials
+gpr.user=your-github-username
+gpr.key=your-github-personal-access-token
+```
+
+Then run:
+
+```bash
+./gradlew publishMavenPublicationToGitHubPackagesRepository
+```

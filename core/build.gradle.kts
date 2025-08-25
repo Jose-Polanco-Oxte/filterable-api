@@ -1,20 +1,3 @@
-plugins {
-    java
-    `java-library`
-}
-
-repositories {
-    mavenCentral()
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-    withJavadocJar()
-    withSourcesJar()
-}
-
 dependencies {
     implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
     implementation("jakarta.validation:jakarta.validation-api:3.1.1")

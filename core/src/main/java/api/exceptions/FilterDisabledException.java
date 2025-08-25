@@ -1,6 +1,6 @@
 package api.exceptions;
 
-import filters.operations.FilterOperation;
+import api.operations.FilterOperation;
 
 public class FilterDisabledException extends RuntimeException {
     private final FilterOperation operation;

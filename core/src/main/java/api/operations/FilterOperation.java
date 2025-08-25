@@ -1,5 +1,13 @@
-package filters.operations;
+package api.operations;
 
+import filters.operations.ComparableOperation;
+import filters.operations.InOperation;
+import filters.operations.TextCollectionOperation;
+import filters.operations.TextOperation;
+
+/**
+ * Enum representing various filter operations for querying.
+ */
 public enum FilterOperation {
     EQUALS("equals"),
     NOT_EQUALS("notEquals"),
@@ -19,6 +27,11 @@ public enum FilterOperation {
 
     private final String operation;
 
+    FilterOperation(String operation) {
+        this.operation = operation;
+    }
+
+    // Static factory methods to convert from other operation enums
     public static FilterOperation fromComparableOperation(ComparableOperation op) {
         return switch (op) {
             case EQ -> EQUALS;
@@ -30,6 +43,7 @@ public enum FilterOperation {
         };
     }
 
+    // Map TextCollectionOperation to FilterOperation
     public static FilterOperation fromTextCollectionOperation(TextCollectionOperation op) {
         return switch (op) {
             case IN -> IN;
@@ -42,6 +56,7 @@ public enum FilterOperation {
         };
     }
 
+    // Map TextOperation to FilterOperation
     public static FilterOperation fromTextOperation(TextOperation op) {
         return switch (op) {
             case EQ -> EQUALS;
@@ -53,15 +68,12 @@ public enum FilterOperation {
         };
     }
 
+    // Map InOperation to FilterOperation
     public static FilterOperation fromInOperation(InOperation op) {
         return switch (op) {
             case IN -> IN;
             case NOT_IN -> NOT_IN;
         };
-    }
-
-    FilterOperation(String operation) {
-        this.operation = operation;
     }
 
     public String getOperation() {

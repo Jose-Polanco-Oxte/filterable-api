@@ -6,7 +6,7 @@ import api.operations.Op;
  * Enumeration of comparison operations.
  * <p>
  * {@link Op} for operations that compare two values.
- * </p>
+ *
  * <p>
  * Includes:
  * <ul>
@@ -17,7 +17,7 @@ import api.operations.Op;
  *     <li>{@link ComparableOperation#GTE}: Greater Than or Equal</li>
  *     <li>{@link ComparableOperation#LTE}: Less Than or Equal</li>
  * </ul>
- * </p>
+ *
  */
 public enum ComparableOperation implements Op {
     EQ, NEQ, GT, LT, GTE, LTE

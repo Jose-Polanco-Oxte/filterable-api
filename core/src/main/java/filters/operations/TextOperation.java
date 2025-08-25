@@ -6,7 +6,7 @@ import api.operations.Op;
  * Enumeration of text operations.
  * <p>
  * {@link Op} for operations that involve text values.
- * </p>
+ * 
  * <p>
  * Includes:
  * <ul>
@@ -17,7 +17,7 @@ import api.operations.Op;
  *     <li>{@link TextOperation#STARTS_WITH}: Starts With</li>
  *     <li>{@link TextOperation#ENDS_WITH}: Ends With</li>
  * </ul>
- * </p>
+ * 
  */
 public enum TextOperation implements Op {
     EQ, NEQ, CONTAINS, NOT_CONTAINS, STARTS_WITH, ENDS_WITH

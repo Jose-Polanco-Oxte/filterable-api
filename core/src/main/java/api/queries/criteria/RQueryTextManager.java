@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 /**
  * Manager for building filter specifications for text attributes in relational contexts.
- * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. </p>
+ * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. 
  *
  * @param <T> the type of the root entity to filter
  * @param <R> the type of the related entity
@@ -64,11 +64,11 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     /**
-     * Adds a custom filter specification to the current specification.
+     * Adds a custom filter specification to the current specification,
+     * if the provided specification is null, it will be ignored.
      *
      * @param specification the custom filter specification to add
      * @return the current RQueryTextManager instance
-     * @apiNote if the provided specification is null, it will be ignored
      */
     @Override
     public MetamodelQuery<R, String, TextOperation, TextCollectionOperation> custom(FilterSpecification<T> specification) {
@@ -80,13 +80,13 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     /**
-     * Applies a filter based on the provided filter object and attribute.
+     * Applies a filter based on the provided filter object and attribute,
+     * if the filter, attribute, operation, or value is null or empty, the method will have no effect.
      *
      * @param filter    the filter object containing the value and operation
      * @param attribute the attribute to filter on
      * @return the current {@link RQueryTextManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or value is null or empty, the method will have no effect
      * @see Filter
      * @see TextOperation
      */
@@ -99,14 +99,14 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     /**
-     * Applies a filter based on the provided value, operation, and attribute.
+     * Applies a filter based on the provided value, operation, and attribute,
+     * if the attribute, value, or operation is null or empty, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param value     the value to filter by
      * @param operation the text operation to apply
      * @return the current {@link RQueryTextManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, value, or operation is null or empty, the method will have no effect
      * @see TextOperation
      */
     @Override
@@ -130,14 +130,14 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     /**
-     * Applies a collection-based filter based on the provided filter object and attribute.
+     * Applies a collection-based filter based on the provided filter object and attribute,
+     * if the attribute, values, or operation is null, or if values is empty, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param values    the collection of values to filter by
      * @param operation the text collection operation to apply
      * @return the current {@link RQueryTextManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, values, or operation is null, or if values is empty, the method will have no effect
      * @see TextCollectionOperation
      */
     @Override
@@ -162,13 +162,13 @@ public class RQueryTextManager<T, R> extends SpecRelationQuery<T, R, String, Tex
     }
 
     /**
-     * Applies a collection-based filter based on the provided filter object and attribute.
+     * Applies a collection-based filter based on the provided filter object and attribute,
+     * if the filter, attribute, operation, or values are null or empty, the method will have no effect.
      *
      * @param filter    the collection filter object containing the values and operation
      * @param attribute the attribute to filter on
      * @return the current {@link RQueryTextManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or values are null or empty, the method will have no effect
      * @see CollectionFilter
      * @see TextCollectionOperation
      */

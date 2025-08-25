@@ -24,23 +24,23 @@ public class FilterableApi<T> {
     }
 
     /**
-     * Creates a new instance of FilterableApi with no initial filter specification.
+     * Creates a new instance of FilterableApi with no initial filter specification,
+     * this is equivalent to calling initialSpec with an empty specification (null-safe).
      *
      * @param <T> the type of the entity to filter
      * @return a new FilterableApi instance
-     * @apiNote this is equivalent to calling initialSpec with an empty specification (null-safe)
      */
     public static <T> FilterableApi<T> create() {
         return new FilterableApi<>(FilterSpecification.none());
     }
 
     /**
-     * Creates a new instance of FilterableApi with the provided initial filter specification.
+     * Creates a new instance of FilterableApi with the provided initial filter specification,
+     * if initial specification is null, it will be replaced with null-safe empty specification.
      *
      * @param specification the initial filter specification
      * @param <T>           the type of the entity to filter
      * @return a new FilterableApi instance
-     * @apiNote if initial specification is null, it will be replaced with null-safe empty specification
      */
     public static <T> FilterableApi<T> initialSpec(FilterSpecification<T> specification) {
         return new FilterableApi<>(specification);
@@ -56,11 +56,11 @@ public class FilterableApi<T> {
     }
 
     /**
-     * Starts building a comparable filter configuration.
+     * Starts building a comparable filter configuration,
+     * {@code Y} must implement {@link Comparable} interface to ensure proper comparison operations.
      *
      * @param <Y> the type of the {@link Comparable} attribute
      * @return a configuration stage for comparable types
-     * @apiNote {@code Y} must implement {@link Comparable} interface to ensure proper comparison operations
      * @see ComparableConfig
      * @see QueryComparableManager
      */
@@ -82,8 +82,8 @@ public class FilterableApi<T> {
     /**
      * Starts building a relational filter configuration.
      *
-     * @return a join path builder for relational types
-     * @apiNote this method initializes the join path with the root entity type {@code T}
+     * @return a join path builder for relational types,
+     * this method initializes the join path with the root entity type {@code T}.
      * @see JoinPathBuilder
      */
     public JoinPathBuilder<T, T> relational() {

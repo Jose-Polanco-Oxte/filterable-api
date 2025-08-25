@@ -1,9 +1,18 @@
 plugins {
-    id("java")
+    java
+    `java-library`
 }
 
 repositories {
     mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -13,11 +22,6 @@ dependencies {
     testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
 }
 
 tasks.test {

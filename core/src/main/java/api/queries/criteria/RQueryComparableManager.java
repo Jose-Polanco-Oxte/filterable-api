@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 /**
  * Manager for building filter specifications for comparable attributes in relational contexts.
- * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. </p>
+ * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. 
  *
  * @param <T> the type of the root entity to filter
  * @param <R> the type of the related entity
@@ -62,11 +62,11 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Adds a custom filter specification to the current specification.
+     * Adds a custom filter specification to the current specification,
+     * if the provided specification is null, it will be ignored.
      *
      * @param specification the custom filter specification to add
      * @return the current RQueryComparableManager instance
-     * @apiNote if the provided specification is null, it will be ignored
      */
     @Override
     public RQueryComparableManager<T, R, Y> custom(FilterSpecification<T> specification) {
@@ -78,13 +78,13 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a filter based on the provided filter object and attribute.
+     * Applies a filter based on the provided filter object and attribute,
+     * if the filter, attribute, operation, or value is null, the method will have no effect.
      *
      * @param filter    the filter object containing the value and operation
      * @param attribute the attribute to filter on
      * @return the current {@link RQueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or value is null, the method will have no effect
      * @see Filter
      * @see ComparableOperation
      */
@@ -97,14 +97,14 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a filter based on the provided attribute, value, and operation.
+     * Applies a filter based on the provided attribute, value, and operation;
+     * if the attribute, value, or operation is null, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param value     the value to compare against
      * @param operation the comparison operation to apply
      * @return the current {@link RQueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, value, or operation is null, the method will have no effect
      * @see ComparableOperation
      */
     @Override
@@ -128,14 +128,14 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a filter based on the provided attribute, collection of values, and operation.
+     * Applies a filter based on the provided attribute, collection of values, and operation;
+     * if the attribute, values, or operation is null, or if values is empty, the method will have no effect
      *
      * @param attribute the attribute to filter on
      * @param values    the collection of values to compare against
      * @param operation the in operation to apply (IN or NOT_IN)
      * @return the current {@link RQueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, values, or operation is null, or if values is empty, the method will have no effect
      * @see InOperation
      */
     @Override
@@ -154,13 +154,13 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a filter based on the provided collection filter object and attribute.
+     * Applies a filter based on the provided collection filter object and attribute,
+     * if the filter, attribute, operation, or values are null or empty, the method will have no effect.
      *
      * @param filter    the collection filter object containing the values and operation
      * @param attribute the attribute to filter on
      * @return the current {@link RQueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or values are null or empty, the method will have no effect
      * @see CollectionFilter
      * @see InOperation
      */
@@ -173,13 +173,13 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a "between" filter based on the provided attribute, lower bound, and upper bound.
+     * Applies a "between" filter based on the provided attribute, lower bound, and upper bound;
+     * if the attribute, lower bound, or upper bound is null, the method will have no effect.
      *
      * @param attribute  the attribute to filter on
      * @param lowerBound the lower bound of the range
      * @param upperBound the upper bound of the range
      * @return the current {@link RQueryComparableManager} instance
-     * @apiNote if the attribute, lower bound, or upper bound is null, the method will have no effect
      */
     public RQueryComparableManager<T, R, Y> applyBetweenTo(
             SingularAttribute<R, Y> attribute,
@@ -196,12 +196,12 @@ public class RQueryComparableManager<T, R, Y extends Comparable<? super Y>> exte
     }
 
     /**
-     * Applies a "between" filter based on the provided range filter object and attribute.
+     * Applies a "between" filter based on the provided range filter object and attribute,
+     * if the filter, attribute, start, or end is null, the method will have no effect.
      *
      * @param filter    the range filter object containing the start and end values
      * @param attribute the attribute to filter on
      * @return the current {@link RQueryComparableManager} instance
-     * @apiNote if the filter, attribute, start, or end is null, the method will have no effect
      * @see RangeFilter
      */
     public RQueryComparableManager<T, R, Y> applyBetweenTo(RangeFilter<Y> filter, SingularAttribute<R, Y> attribute) {

@@ -16,7 +16,7 @@ import java.util.Collection;
 
 /**
  * Manager for building filter specifications for comparable attributes.
- * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. </p>
+ * <p> Their methods can throw {@link FilterDisabledException} if the operation is disabled in the registry. 
  *
  * @param <T> the type of the entity to filter
  * @param <Y> the type of the {@link Comparable} attribute
@@ -37,11 +37,11 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Adds a custom filter specification to the current specification.
+     * Adds a custom filter specification to the current specification,
+     * if the provided specification is null, it will be ignored.
      *
      * @param specification the custom filter specification to add
      * @return the current QueryComparableManager instance
-     * @apiNote if the provided specification is null, it will be ignored
      */
     @Override
     public QueryComparableManager<T, Y> custom(FilterSpecification<T> specification) {
@@ -51,13 +51,13 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies a filter based on the provided filter object and attribute.
+     * Applies a filter based on the provided filter object and attribute;
+     * if the filter, attribute, operation, or value is null, the method will have no effect.
      *
      * @param filter    the filter object containing the value and operation
      * @param attribute the attribute to filter on
      * @return the current {@link QueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or value is null, the method will have no effect
      * @see Filter
      * @see ComparableOperation
      */
@@ -70,14 +70,14 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies a filter based on the provided attribute, value, and operation.
+     * Applies a filter based on the provided attribute, value, and operation;
+     * if the attribute, value, or operation is null, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param value     the value to compare against
      * @param operation the comparison operation to apply
      * @return the current {@link QueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, value, or operation is null, the method will have no effect
      * @see ComparableOperation
      */
     @Override
@@ -101,14 +101,14 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies an "in" or "not in" filter based on the provided attribute, values, and operation.
+     * Applies an "in" or "not in" filter based on the provided attribute, values, and operation;
+     * if the attribute, values, or operation is null, or if the values collection is empty, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param values    the collection of values to compare against
      * @param operation the "in" or "not in" operation to apply
      * @return the current {@link QueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the attribute, values, or operation is null, or if the values collection is empty, the method will have no effect
      * @see InOperation
      * @see SingularAttribute
      */
@@ -128,13 +128,13 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies a collection filter based on the provided filter object and attribute.
+     * Applies a collection filter based on the provided filter object and attribute;
+     * if the filter, attribute, operation, or values are null or empty, the method will have no effect.
      *
      * @param filter    the collection filter object containing the values and operation
      * @param attribute the attribute to filter on
      * @return the current {@link QueryComparableManager} instance
      * @throws FilterDisabledException if the operation is disabled in the registry
-     * @apiNote if the filter, attribute, operation, or values are null or empty, the method will have no effect
      * @see CollectionFilter
      * @see InOperation
      */
@@ -147,13 +147,13 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies a "between" filter based on the provided attribute, start value, and end value.
+     * Applies a "between" filter based on the provided attribute, start value, and end value;
+     * if the attribute, start, or end is null, the method will have no effect.
      *
      * @param attribute the attribute to filter on
      * @param start     the start value of the range
      * @param end       the end value of the range
      * @return the current {@link QueryComparableManager} instance
-     * @apiNote if the attribute, start, or end is null, the method will have no effect
      */
     public QueryComparableManager<T, Y> filterBetween(SingularAttribute<T, Y> attribute, Y start, Y end) {
         if (attribute == null || start == null || end == null) {
@@ -166,12 +166,12 @@ public class QueryComparableManager<T, Y extends Comparable<? super Y>> extends 
     }
 
     /**
-     * Applies a "between" filter based on the provided range filter object and attribute.
+     * Applies a "between" filter based on the provided range filter object and attribute,
+     * if the filter, attribute, start, or end is null, the method will have no effect.
      *
      * @param filter    the range filter object containing the start and end values
      * @param attribute the attribute to filter on
      * @return the current {@link QueryComparableManager} instance
-     * @apiNote if the filter, attribute, start, or end is null, the method will have no effect
      * @see RangeFilter
      */
     public QueryComparableManager<T, Y> filterBetween(RangeFilter<Y> filter, SingularAttribute<T, Y> attribute) {

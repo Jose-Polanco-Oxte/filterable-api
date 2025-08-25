@@ -6,7 +6,7 @@ import api.operations.CollectionOp;
  * Enumeration of text collection operations.
  * <p>
  * {@link CollectionOp} for operations that involve collections of text values.
- * </p>
+ * 
  * <p>
  * Includes:
  * <ul>
@@ -18,7 +18,7 @@ import api.operations.CollectionOp;
  *     <li>{@link TextCollectionOperation#STARTS_WITH}: Starts With</li>
  *     <li>{@link TextCollectionOperation#ENDS_WITH}: Ends With</li>
  * </ul>
- * </p>
+ * 
  */
 public enum TextCollectionOperation implements CollectionOp {
     IN, NOT_IN, CONTAINS_ANY, CONTAINS_ALL, NOT_CONTAINS, STARTS_WITH, ENDS_WITH,

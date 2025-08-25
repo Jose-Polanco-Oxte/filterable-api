@@ -32,12 +32,12 @@ public class JoinPathBuilder<T, R> {
     }
 
     /**
-     * Creates a new JoinPathBuilder by joining the specified attribute.
+     * Creates a new JoinPathBuilder by joining the specified attribute,
+     * {@code R} is the current entity type, and {@code Y} is the type of the joined entity.
      *
      * @param attribute the list attribute to join
      * @param <Y>       the type of the joined attribute
      * @return a new {@link JoinPathBuilder} for the joined attribute
-     * @apiNote {@code R} is the current entity type, and {@code Y} is the type of the joined entity
      * @see ListAttribute
      */
     public <Y> JoinPathBuilder<T, Y> join(ListAttribute<R, Y> attribute) {
@@ -45,12 +45,12 @@ public class JoinPathBuilder<T, R> {
     }
 
     /**
-     * Creates a new JoinPathBuilder by joining the specified attribute.
+     * Creates a new JoinPathBuilder by joining the specified attribute,
+     * {@code R} is the current entity type, and {@code Y} is the type of the joined entity.
      *
      * @param attribute the set attribute to join
      * @param <Y>       the type of the joined attribute
      * @return a new {@link JoinPathBuilder} for the joined attribute
-     * @apiNote {@code R} is the current entity type, and {@code Y} is the type of the joined entity
      * @see SetAttribute
      */
     public <Y> JoinPathBuilder<T, Y> join(SetAttribute<R, Y> attribute) {
@@ -58,10 +58,10 @@ public class JoinPathBuilder<T, R> {
     }
 
     /**
-     * Builds the relational API with the constructed join path.
+     * Builds the relational API with the constructed join path,
+     * {@code T} is the root entity type, and {@code R} is the current entity type in the join path.
      *
      * @return a {@link RelationalApi} instance with the join path.
-     * @apiNote {@code T} is the root entity type, and {@code R} is the current entity type in the join path
      */
     public RelationalApi<T, R> buildPath() {
         return RelationalApi.of(this.path, this.specification);

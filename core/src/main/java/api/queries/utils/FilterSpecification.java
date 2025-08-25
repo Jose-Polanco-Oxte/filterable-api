@@ -7,7 +7,7 @@ import jakarta.persistence.criteria.Root;
 
 /**
  * A functional interface for building filter specifications for JPA criteria queries.
- * <p> It provides methods to combine specifications using logical AND and OR operations. </p>
+ * <p> It provides methods to combine specifications using logical AND and OR operations. 
  *
  * @param <T> the type of the entity to filter
  * @see jakarta.persistence.criteria.CriteriaBuilder
@@ -32,11 +32,11 @@ public interface FilterSpecification<T> {
     }
 
     /**
-     * Returns a FilterSpecification that does not apply any filtering (always true).
+     * Returns a FilterSpecification that does not apply any filtering (always true),
+     * this specification can be used as a neutral element in logical operations.
      *
      * @param <T> the type of the entity
      * @return a FilterSpecification that does not filter any results
-     * @apiNote This specification can be used as a neutral element in logical operations.
      */
     static <T> FilterSpecification<T> none() {
         return (root, query, criteriaBuilder) -> null;
@@ -53,11 +53,11 @@ public interface FilterSpecification<T> {
     Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder);
 
     /**
-     * Combines this FilterSpecification with another using a logical AND operation.
+     * Combines this FilterSpecification with another using a logical AND operation,
+     * if either specification is null, the result will be the other specification.
      *
      * @param other the other FilterSpecification to combine with
      * @return a new FilterSpecification representing the logical AND of this and the other specification
-     * @apiNote If either specification is null, the result will be the other specification.
      */
     default FilterSpecification<T> and(FilterSpecification<T> other) {
         return (root, query, criteriaBuilder) -> {
@@ -72,11 +72,11 @@ public interface FilterSpecification<T> {
     }
 
     /**
-     * Combines this FilterSpecification with another using a logical OR operation.
+     * Combines this FilterSpecification with another using a logical OR operation,
+     * if either specification is null, the result will be the other specification.
      *
      * @param other the other FilterSpecification to combine with
      * @return a new FilterSpecification representing the logical OR of this and the other specification
-     * @apiNote If either specification is null, the result will be the other specification.
      */
     default FilterSpecification<T> or(FilterSpecification<T> other) {
         return (root, query, criteriaBuilder) -> {

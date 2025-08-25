@@ -17,7 +17,6 @@ import java.util.function.Function;
  * @param <Y> the type of the attribute in the related entity
  * @param <C> the type of the filter configuration must extend {@link FilterConfiguration}
  * @param <Q> the type of the query manager must extend {@link SpecRelationQuery}
- * @apiNote this class is used internally to manage the configuration and building of relational filter specifications
  * @see FilterConfiguration
  * @see SpecRelationQuery
  */
@@ -44,7 +43,6 @@ public class RelationalConfigStage<T, R, Y, C extends FilterConfiguration<T, Y>,
      *
      * @param configConsumer the consumer to apply to the filter configuration
      * @return the query manager: {@link SpecRelationQuery} for further query building
-     * @apiNote this method allows for fluent configuration of the filter settings
      */
     public Q configure(Consumer<C> configConsumer) {
         configConsumer.accept(config);
@@ -55,10 +53,10 @@ public class RelationalConfigStage<T, R, Y, C extends FilterConfiguration<T, Y>,
     }
 
     /**
-     * Finalizes the configuration and returns the query manager.
+     * Finalizes the configuration and returns the query manager,
+     * this method allows to skip configuration and proceed directly to query building.
      *
      * @return the query manager for further query building
-     * @apiNote this method allows to skip configuration and proceed directly to query building
      */
     public Q configure() {
         queryManager.setSpecification(specification);

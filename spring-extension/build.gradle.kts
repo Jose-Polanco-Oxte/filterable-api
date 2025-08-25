@@ -1,11 +1,15 @@
 plugins {
     java
+    `java-library`
     id("io.spring.dependency-management") version "1.1.7"
 }
 
 java {
-    withSourcesJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
     withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {

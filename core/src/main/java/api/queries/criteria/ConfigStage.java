@@ -13,7 +13,6 @@ import java.util.function.Consumer;
  * @param <Y> the type of the attribute to filter
  * @param <C> the type of the filter configuration must extend {@link FilterConfiguration}
  * @param <Q> the type of the query manager must extend {@link SpecQuery}
- * @apiNote this class is used internally to manage the configuration and building of filter specifications
  * @see FilterConfiguration
  * @see SpecQuery
  */
@@ -33,11 +32,11 @@ public class ConfigStage<T, Y, C extends FilterConfiguration<T, Y>, Q extends Sp
     }
 
     /**
-     * Applies the given consumer to configure the filter configuration.
+     * Applies the given consumer to configure the filter configuration,
+     * this method allows for fluent configuration of the filter settings
      *
      * @param consumer the consumer to apply to the filter configuration
-     * @return the query manager: {@link SpecQuery} for filter specification building
-     * @apiNote this method allows for fluent configuration of the filter settings
+     * @return the query manager: {@link SpecQuery} for filter specification buildin
      */
     public Q configure(Consumer<C> consumer) {
         consumer.accept(config);
@@ -47,10 +46,10 @@ public class ConfigStage<T, Y, C extends FilterConfiguration<T, Y>, Q extends Sp
     }
 
     /**
-     * Finalizes the configuration and returns the query manager.
+     * Finalizes the configuration and returns the query manager,
+     * this method allows to skip configuration and proceed directly to query building
      *
      * @return the query manager: {@link SpecQuery} for filter specification building
-     * @apiNote this method allows to skip configuration and proceed directly to query building
      */
     public Q configure() {
         query.setRegistry(config.getOperationRegistry());

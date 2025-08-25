@@ -36,14 +36,14 @@ public class RelationalApi<T, R> {
     }
 
     /**
-     * Creates a new instance of RelationalApi with the provided join path and filter specification.
+     * Creates a new instance of RelationalApi with the provided join path and filter specification,
+     * if initial specification is null, it will be replaced with null-safe empty specification.
      *
      * @param joinPath      the function defining the join path from the root entity to the related entity
      * @param specification the initial filter specification
      * @param <T>           the root entity type
      * @param <R>           the related entity type
      * @return a new RelationalApi instance
-     * @apiNote if initial specification is null, it will be replaced with null-safe empty specification
      */
     public static <T, R> RelationalApi<T, R> of(Function<Root<T>, From<?, R>> joinPath, FilterSpecification<T> specification) {
         return new RelationalApi<>(joinPath, specification);

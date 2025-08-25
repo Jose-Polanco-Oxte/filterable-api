@@ -17,11 +17,11 @@ import api.queries.utils.FilterSpecification;
  */
 public interface CustomQueries<T, R, Y, E extends Enum<? extends Op>, EC extends Enum<? extends CollectionOp>> {
     /**
-     * Applies a custom filter specification to the query.
+     * Applies a custom filter specification to the query,
+     * if the specification is null, the method will have no effect.
      *
      * @param specification The filter specification defining the filtering criteria
      * @return The updated query instance with the applied filter
-     * @apiNote If the specification is null, the method will have no effect
      */
     MetamodelQuery<R, Y, E, EC> custom(FilterSpecification<T> specification);
 }

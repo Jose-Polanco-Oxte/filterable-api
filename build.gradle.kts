@@ -6,10 +6,18 @@ plugins {
 
 allprojects {
     group = "io.github.jose-polanco-oxte"
-    version = "1.0.0"
+    version = "1.0.1"
 }
 
 subprojects {
     apply(plugin = "java-library")
     apply(plugin = "com.vanniktech.maven.publish")
+
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+            }
+        }
+    }
 }

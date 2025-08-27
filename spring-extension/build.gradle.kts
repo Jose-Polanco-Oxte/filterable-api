@@ -7,8 +7,12 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<PublishToMavenLocal> {
+    dependsOn(tasks.withType<Sign>())
+}
+
 mavenPublishing {
-    coordinates(group.toString(), project.name, version.toString())
+    coordinates(group.toString(), "filterable-api-${project.name}", version.toString())
 
     pom {
         name.set(project.name)

@@ -1,9 +1,41 @@
 plugins {
+    id("java")
     id("io.spring.dependency-management") version "1.1.7"
 }
 
 repositories {
     mavenCentral()
+}
+
+mavenPublishing {
+    coordinates(group.toString(), project.name, version.toString())
+
+    pom {
+        name.set(project.name)
+        description.set("Module ${project.name} of Filterable API")
+        inceptionYear.set("2025")
+        url.set("https://github.com/Jose-Polanco-Oxte/filterable-api")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("Jose-Polanco-Oxte")
+                name.set("José Antonio Polanco Oxte")
+                email.set("josepolanco4569@gmail.com")
+                url.set("https://github.com/Jose-Polanco-Oxte")
+            }
+        }
+        scm {
+            url.set("https://github.com/Jose-Polanco-Oxte/filterable-api")
+            connection.set("scm:git:git://github.com/Jose-Polanco-Oxte/filterable-api.git")
+            developerConnection.set("scm:git:ssh://git@github.com/Jose-Polanco-Oxte/filterable-api.git")
+        }
+    }
 }
 
 dependencies {

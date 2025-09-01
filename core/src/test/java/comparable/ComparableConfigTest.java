@@ -1,7 +1,7 @@
 package comparable;
 
-import api.configurations.ComparableConfig;
-import api.operations.FilterOperation;
+import io.github.josepolanco.filterable.api.configurations.ComparableConfig;
+import io.github.josepolanco.filterable.api.operations.FilterOperation;
 import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

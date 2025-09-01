@@ -1,4 +1,4 @@
-import api.queries.utils.FilterSpecification;
+import io.github.josepolanco.filterable.api.queries.utils.FilterSpecification;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,6 +14,7 @@ import static org.mockito.Mockito.mock;
 public class FilterSpecificationTest {
 
     // Mock objects for testing
+    @SuppressWarnings("unchecked")
     private final Root<String> root = mock(Root.class);
     private final CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
     private final CriteriaQuery<?> query = mock(CriteriaQuery.class);

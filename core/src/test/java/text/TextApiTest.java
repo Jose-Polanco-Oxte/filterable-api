@@ -1,11 +1,11 @@
 package text;
 
 
-import api.FilterableApi;
-import api.configurations.TextConfig;
-import api.exceptions.FilterDisabledException;
-import filters.operations.TextCollectionOperation;
-import filters.operations.TextOperation;
+import io.github.josepolanco.filterable.api.FilterableApi;
+import io.github.josepolanco.filterable.api.configurations.TextConfig;
+import io.github.josepolanco.filterable.api.exceptions.FilterDisabledException;
+import io.github.josepolanco.filterable.filters.operations.TextCollectionOperation;
+import io.github.josepolanco.filterable.filters.operations.TextOperation;
 import metamodels.Role_;
 import metamodels.User_;
 import models.User;

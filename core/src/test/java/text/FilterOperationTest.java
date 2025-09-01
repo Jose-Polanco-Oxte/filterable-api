@@ -1,9 +1,9 @@
 package text;
 
-import api.FilterableApi;
-import api.queries.utils.FilterSpecification;
-import filters.operations.TextCollectionOperation;
-import filters.operations.TextOperation;
+import io.github.josepolanco.filterable.api.FilterableApi;
+import io.github.josepolanco.filterable.api.queries.utils.FilterSpecification;
+import io.github.josepolanco.filterable.filters.operations.TextCollectionOperation;
+import io.github.josepolanco.filterable.filters.operations.TextOperation;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

@@ -1,10 +1,10 @@
 package text;
 
-import api.queries.criteria.QueryTextManager;
-import filters.CollectionFilter;
-import filters.Filter;
-import filters.operations.TextCollectionOperation;
-import filters.operations.TextOperation;
+import io.github.josepolanco.filterable.api.queries.criteria.QueryTextManager;
+import io.github.josepolanco.filterable.filters.CollectionFilter;
+import io.github.josepolanco.filterable.filters.Filter;
+import io.github.josepolanco.filterable.filters.operations.TextCollectionOperation;
+import io.github.josepolanco.filterable.filters.operations.TextOperation;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

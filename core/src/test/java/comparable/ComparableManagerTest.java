@@ -1,11 +1,11 @@
 package comparable;
 
-import api.queries.criteria.QueryComparableManager;
-import filters.CollectionFilter;
-import filters.Filter;
-import filters.RangeFilter;
-import filters.operations.ComparableOperation;
-import filters.operations.InOperation;
+import io.github.josepolanco.filterable.api.queries.criteria.QueryComparableManager;
+import io.github.josepolanco.filterable.filters.CollectionFilter;
+import io.github.josepolanco.filterable.filters.Filter;
+import io.github.josepolanco.filterable.filters.RangeFilter;
+import io.github.josepolanco.filterable.filters.operations.ComparableOperation;
+import io.github.josepolanco.filterable.filters.operations.InOperation;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

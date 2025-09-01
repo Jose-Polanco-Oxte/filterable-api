@@ -1,7 +1,7 @@
 package text;
 
-import api.configurations.TextConfig;
-import api.operations.FilterOperation;
+import io.github.josepolanco.filterable.api.configurations.TextConfig;
+import io.github.josepolanco.filterable.api.operations.FilterOperation;
 import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

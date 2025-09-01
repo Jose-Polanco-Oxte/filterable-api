@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 public class AttributeMock {
     public static <T, V> SingularAttribute<T, V> of(String name, Class<V> type) {
+        @SuppressWarnings("unchecked")
         SingularAttribute<T, V> attribute = mock(SingularAttribute.class);
         when(attribute.getName()).thenReturn(name);
         when(attribute.getJavaType()).thenReturn(type);

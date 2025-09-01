@@ -1,10 +1,10 @@
 package comparable;
 
-import api.FilterableApi;
-import api.configurations.ComparableConfig;
-import api.exceptions.FilterDisabledException;
-import filters.operations.ComparableOperation;
-import filters.operations.InOperation;
+import io.github.josepolanco.filterable.api.FilterableApi;
+import io.github.josepolanco.filterable.api.configurations.ComparableConfig;
+import io.github.josepolanco.filterable.api.exceptions.FilterDisabledException;
+import io.github.josepolanco.filterable.filters.operations.ComparableOperation;
+import io.github.josepolanco.filterable.filters.operations.InOperation;
 import metamodels.Role_;
 import metamodels.User_;
 import models.User;
